@@ -102,7 +102,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 		Log.d(TAG, "\tNotification Data: " + data.toString());
         FCMPlugin.sendPushPayload( data );
         //To get a Bitmap image from the URL received
-        sendNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), data,remoteMessage.getData().get("image"));
+	if(actionData.getString("actionType").equals("codePush")) {
+        	Log.d("MyFirebaseMessaging", "Code Push");
+        } else {
+                sendNotification(actionData.get("title").toString(), actionData.get("description").toString(), data, actionData);
+        }
     }
     // [END receive_message]
 
